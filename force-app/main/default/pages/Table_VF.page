@@ -1,0 +1,59 @@
+<apex:page id="pageAccount" controller="Table_Ctrl" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    	<BODY/>
+        <!-- HEAD -->
+        <apex:includeScript value="{!URLFOR($Resource.Jquery)}"  />
+        <apex:includeScript value="{!$Resource.JQuery1_9_1}"/>  
+        <apex:includeScript value="/soap/ajax/32.0/connection.js"/>     
+        <apex:includeScript value="/support/console/37.0/integration.js"/>
+        <head>
+            <apex:slds /> 
+        </head> 
+        <apex:form id="accountForm" >
+            <pbe:PageBlockTableEnhancerADV targetPbTableIds="accountTable" pageSizeOptions="10,50,100,200" defaultPageSize="50" enableExport="false"/>
+            <apex:pageBlock id="mainBlock" title="Account Table" mode="maindetail">
+                <apex:pageMessages id="errors"/>
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Save" action="{!handleSave}" reRender="errors,mainBlock" status="ajaxStatus"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!lst_wrp_account}" var="ac" id="accountTable" align="top" width="100%">
+                    <apex:column headerValue="Nama">
+                        <apex:outputText value="{!ac.nama}"/>
+                    </apex:column>
+                    <apex:column headerValue="Type">
+                        <apex:outputText value="{!ac.tipe}"/>
+                    </apex:column>
+                    <apex:column headerValue="Phone">
+                        <apex:outputText value="{!ac.no_telp}"/>
+                    </apex:column>
+                    <apex:column headerValue="Area">
+                        <apex:inputHidden value="{!ac.ext_id}" id="targetId" />
+                        <apex:inputText size="20" id="targetName" onFocus="this.blur()" />
+                        <a href="#" onclick="openLookupPopup('{!$Component.targetName}', '{!$Component.targetId}', '{!ac.ext_id}'); return false">
+                            cari area
+                        </a>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </html>
+    <script>
+    var new_win = null;
+    function openLookupPopup(name, id, extid) {
+        var url = "/apex/Area_VF?namefield=" + name + "&idfield=" + id + "&extid=" + extid;
+        new_win = window.open(url, 'Popup', 'height=500,width=900,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no');
+        if (window.focus)
+        {
+            new_win.focus();
+        }
+        return false;
+    }
+    function closeLookupPopup()
+    {
+        if (null != new_win)
+        {
+            new_win.close();
+        }
+    }
+    </script>
+</apex:page>

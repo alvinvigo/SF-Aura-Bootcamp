@@ -1,0 +1,38 @@
+<apex:page controller="Area_Ctrl" showHeader="false" standardstylesheets="true">
+    <apex:form title="Area" id="formArea">
+        <apex:pageMessages id="errors"/>
+        
+        <apex:pageBlock title="Details">
+            <apex:pageBlockTable value="{!lst_res_pkp}" var="pkp">
+                <apex:column headerValue="Contact Person">
+                    <apex:outputLink value="#" onclick="fillIn('{!pkp.customer}', '{!pkp.cperson}')">{!pkp.cperson}</apex:outputLink> 
+                </apex:column>
+                <apex:column headerValue="Full Name">
+                    <apex:outputText value="{!pkp.fullname}"/>
+                </apex:column>
+                <apex:column headerValue="Partner Number">
+                    <apex:outputText value="{!pkp.partner}"/>
+                </apex:column>
+                <apex:column headerValue="Address">
+                	<apex:outputText value="{!pkp.address}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <script language="javascript">
+    function fillIn(name, id)
+    {
+        var winMain=window.opener;
+        if (null==winMain)
+        {
+            winMain=window.parent.opener;
+        }
+        var ele=winMain.document.getElementById('{!$CurrentPage.parameters.namefield}');
+        ele.value=id;
+        ele=winMain.document.getElementById('{!$CurrentPage.parameters.idfield}');
+        ele.value=name;
+        winMain.closeLookupPopup();
+    }
+    </script>
+</apex:page>
