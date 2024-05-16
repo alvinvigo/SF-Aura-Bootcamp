@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="invalidLookup" type="boolean"/>
+    <aura:attribute name="objectType" type="string"/>
+</aura:event>

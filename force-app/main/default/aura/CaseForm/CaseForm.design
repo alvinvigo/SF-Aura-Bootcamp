@@ -1,0 +1,7 @@
+<design:component>
+    <design:attribute name="caseSubject" label="Subject"/> 
+    <design:attribute name="caseDescription" label="Description"/>
+    <design:attribute name="caseOrigin" label="Case Origin"/>
+    <design:attribute name="casePriority" label="Case Priority"/>
+    <design:attribute name="selectedLookupRecord" label="Contact"/> 
+</design:component>

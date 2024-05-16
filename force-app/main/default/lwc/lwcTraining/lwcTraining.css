@@ -1,0 +1,32 @@
+.resizeable-container {
+    display: flex;
+    min-height: 80vh;
+}
+
+.resizeable-item {
+    flex: 50%;
+    overflow: auto;
+}
+
+.resizer-x {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: hsl(212, 100%, 17%);
+    padding: 4px;
+}
+
+.resizer-x {
+    z-index: 2;
+    cursor: col-resize;
+}
+
+.resizer-x::before,
+.resizer-x::after {
+    content: "";
+    width: 2px;
+    height: 16px;
+    margin: 2px;
+    background: lightgray;
+}

@@ -1,0 +1,63 @@
+<aura:component controller="CaseForm_Ctrl">
+    <!--attribute for this component-->
+    <aura:attribute name="contactid" type="string" />
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="cont" type="Contact" default="{'sobjectType':'Contact', 
+                                                        'Salutation': '',
+                                                        'FirstName': '',
+                                                        'LastName': '',
+                                                        'Email': '',
+                                                        'Phone': ''}"/>
+    <aura:attribute name="salutationMap" type="Map"/>
+    <aura:attribute name="selectedLookupRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedContactRecord" type="sObject" default="{}"/>
+    
+    <!--handler for this component-->
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    
+     <!--registerEvent for this component-->
+    <aura:registerEvent name="updateContact" type="c:ContactUpdate"/>
+    <aura:registerEvent name="InvalidLookupEvent" type="c:InvalidLookupEvent"/>
+    
+    <div class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.isOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" >
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.handleCloseModal }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Contact</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: 100%">
+                        <form class="slds-form_stacked">
+                            <lightning:select aura:id="salutationPicklist" value="{!v.cs.Origin}" onchange="{!c.handleOriginChange}" name="salutationPicklist" label="Salutation">
+                                <option value="">--None--</option>
+                                <aura:iteration items="{!v.salutationMap}" var="salutation" indexVar="key">
+                                    <option text="{!salutation.value}" value="{!salutation.key}" selected="{!salutation.key==v.cont.Salutation}" />
+                                </aura:iteration>
+                            </lightning:select>
+                            <lightning:input aura:id="contactform" label="First Name" name="FirstName" value="{!v.cont.FirstName}"/>
+                            <lightning:input aura:id="contactform" label="Last Name" name="LastName" required="true" value="{!v.cont.LastName}"/>
+                            <lightning:input aura:id="contactform" type="email" label="Email" name="Email" required="true" value="{!v.cont.Email}"/>
+                            <lightning:input aura:id="contactform" type="tel" label="Phone" name="Phone" value="{!v.cont.Phone}"/>
+                        </form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.handleCloseModal }"/>
+                        <lightning:button variant="brand" 
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{! c.handleSave }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+</aura:component>

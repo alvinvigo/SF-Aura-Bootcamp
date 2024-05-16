@@ -1,0 +1,61 @@
+<aura:component implements="lightning:availableForFlowScreens,force:appHostable,force:hasRecordId,force:lightningQuickAction"
+                access="global"
+                controller="CaseForm_Ctrl">
+    <!--attribute for this component-->
+    <aura:attribute name="selectedLookupRecord" type="Contact" default="{sobjectType:'Contact'}"/>
+    <aura:attribute name="cs" type="Case" default="{'sobjectType':'Case', 
+                                                       'Subject': '',
+                                                       'Description': '',
+                                                       'Origin': '',
+                                                       'Priority': ''}"/>
+    <aura:attribute name="originMap" type="Map"/>
+    <aura:attribute name="priorityMap" type="Map"/>
+	<aura:attribute name="iconName" type="String"/>
+    <aura:attribute name="caseSubject" type="String"/>
+    <aura:attribute name="caseDescription" type="String"/>
+    <aura:attribute name="caseOrigin" type="String"/>
+    <aura:attribute name="casePriority" type="String"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="canBack" type="boolean" default="false" />
+    <aura:attribute name="canPause" type="boolean" default="false" />
+    <aura:attribute name="canNext" type="boolean" default="false" />
+    <aura:attribute name="canFinish" type="boolean" default="false" />
+    
+    <!--handler for this component-->
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    
+    <!--registerEvent for this component-->
+    <aura:registerEvent name="oSelectedRecordEvent" type="c:SelectedContactEvent"/>   
+    <aura:registerEvent name="oInvalidLookupEvent" type="c:InvalidLookupEvent"/> 
+   
+    <lightning:card>
+        <lightning:layout  multipleRows="true">
+            <lightning:layoutItem size="12" padding="around-small">
+                <lightning:input aura:id="caseform" label="Subject" name="caseSubject" required="true" onchange="{!c.handleChangeSubject}" value="{!v.cs.Subject}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <lightning:textarea aura:id="caseform" label="Description" name="caseDescription" onchange="{!c.handleChangeDescription}" value="{!v.cs.Description}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <lightning:select aura:id="originPicklist" value="{!v.cs.Origin}" onchange="{!c.handleOriginChange}" name="originPicklist" label="Origin" required="true">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.originMap}" var="origin" indexVar="key">
+                        <option text="{!origin.value}" value="{!origin.key}" selected="{!origin.key==v.cs.Origin}" />
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <lightning:select aura:id="priorityPicklist" value="{!v.cs.Priority}" onchange="{!c.handlePriorityChange}" name="priorityPicklist" label="Priority" required="true">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.priorityMap}" var="priority" indexVar="key">
+                        <option text="{!priority.value}" value="{!priority.key}" selected="{!priority.key==v.cs.Priority}" />
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <c:CustomLookup required="true" objectAPIName="Contact" iconName="standard:contact" selectedRecord="{!v.selectedLookupRecord}" label="Contact" isOpen="{!v.isOpen}" isShowModal="true"/>
+            </lightning:layoutItem>
+            <c:ModalCreateContact isOpen="{!v.isOpen}" selectedContactRecord="{!v.selectedLookupRecord}" contactid="{!v.contactid}"/>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

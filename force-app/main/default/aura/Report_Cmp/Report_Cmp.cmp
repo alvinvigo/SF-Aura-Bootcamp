@@ -1,0 +1,68 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,force:lightningQuickActionwithoutHeader,force:appHostable,lightning:actionOverride,lightning:hasPageReference" 
+                access="global"
+                controller="Report_Ctrl">
+
+    <aura:attribute name="lst_filter" type="List" />
+    
+    <aura:attribute name="dt" type="Date" access="global"/>
+    <aura:attribute name="dt_time" type="Datetime" access="global"/>
+    
+    <aura:attribute name="isSpinner" type="Boolean" default="true" />
+    
+    <aura:attribute name="wrapper_filter" type="Object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:if isTrue="{!v.isSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
+    
+    <lightning:card title="">
+        <div class="slds-p-left_x-small">
+            <div class="slds-p-right_x-small">
+                <div class="slds-section slds-is-open" aura:id="filterSection">
+                    <!--section header-->
+                    <h3 class="slds-section__title">
+                        <button aria-controls="filterList" class="slds-button slds-section__title-action">
+                            <span onclick="{!c.toggleSection}" data-auraId="filterSection">
+                                <lightning:icon iconName="utility:switch"
+                                                size="x-small"
+                                                class="slds-section__title-action-icon slds-button__icon_left"
+                                                alternativeText="button icon" 
+                                                />
+                            </span>
+                            <span class="slds-truncate" title="Filter">Filter</span>
+                        </button>
+                    </h3>
+                    <!--section body-->
+                    <div class="slds-section__content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-left_x-small">
+            <div class="slds-p-right_x-small">
+                <div class="slds-section slds-is-open" aura:id="tabelSection">
+                    <!--section header-->
+                    <h3 class="slds-section__title">
+                        <button aria-controls="tabelList" class="slds-button slds-section__title-action">
+                            <span onclick="{!c.toggleSection}" data-auraId="tabelSection">
+                                <lightning:icon iconName="utility:switch"
+                                                size="x-small"
+                                                class="slds-section__title-action-icon slds-button__icon_left"
+                                                alternativeText="button icon" 
+                                                />
+                            </span>
+                            <span class="slds-truncate" title="Tabel">Table</span>
+                        </button>
+                    </h3>
+                    <!--section body-->
+                    <div class="slds-section__content">
+                        ini section table
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

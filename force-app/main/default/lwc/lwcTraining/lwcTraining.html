@@ -1,0 +1,94 @@
+<!--
+  @description       : LWC for Training Bootcamp SFDC CRM - MII
+  @author            : RKA
+  @group             : 
+  @last modified on  : 05-07-2024
+  @last modified by  : RKA
+-->
+<template>
+    <lightning-card icon-name="standard:lead" variant="base">
+        <div slot="title">
+            Leads
+        </div>
+        <div slot="actions">
+
+        </div>
+        <div slot="footer">
+
+        </div>
+        <div class="slds-m-around_medium table-container">
+            <template if:true={leads}>
+                <table
+                    class="slds-table slds-table--bordered slds-table--fixed-layout slds-box slds-max-medium-table--stacked-horizontal"
+                    onmousedown={startResize} onmouseup={stopResize}>
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-is-resizable slds-text-title--caps" scope="col">
+                                <span class="slds-truncate" title="First Name">First Name</span>
+                                <div class="slds-resizable">
+                                    <input type="range" min="20" max="1000"
+                                        class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-602"
+                                        tabindex="0" />
+                                    <span class="slds-resizable__handle" onmousedown={calculateWidth}
+                                        ondrag={setNewWidth}>
+                                        <span class="slds-resizable__divider"></span>
+                                    </span>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+                                <span class="slds-truncate" title="Last Name">Last Name</span>
+                                <div class="slds-resizable">
+                                    <input type="range" min="20" max="1000"
+                                        class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-603"
+                                        tabindex="0" />
+                                    <span class="slds-resizable__handle" onmousedown={calculateWidth}
+                                        ondrag={setNewWidth}>
+                                        <span class="slds-resizable__divider"></span>
+                                    </span>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+                                <span class="slds-truncate" title="Company">Company</span>
+                                <div class="slds-resizable">
+                                    <input type="range" min="20" max="1000"
+                                        class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-604"
+                                        tabindex="0" />
+                                    <span class="slds-resizable__handle" onmousedown={calculateWidth}
+                                        ondrag={setNewWidth}>
+                                        <span class="slds-resizable__divider"></span>
+                                    </span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={leads} for:item="ld">
+                            <tr key={ld.leadId} class="slds-hint-parent">
+                                <th class="slds-cell_action-mode" scope="row">
+                                    <div class="slds-truncate" title="">
+                                        <p>{ld.fName}</p>
+                                    </div>
+                                </th>
+                                <th class="slds-cell_action-mode" scope="row">
+                                    <div class="slds-truncate" title="">
+                                        <p>{ld.lName}</p>
+                                    </div>
+                                </th>
+                                <th class="slds-cell_action-mode" scope="row">
+                                    <div class="slds-truncate" title="">
+                                        <p>{ld.company}</p>
+                                    </div>
+                                </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template if:false={leads}>
+                <div class="slds-text-align_center">
+                    <p class="error-message"><b>{messagePage}</b></p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
